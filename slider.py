@@ -204,15 +204,15 @@ def move_slider(back_val, next_val, slider):
 
 @app.callback(Output('newImg', 'src'), [Input('slider', 'value')])
 def update_slideImg(value):
-        if value == 0:
-            src = "https://source.unsplash.com/random/800*800"
-        elif value ==1:
-            src = "https://source.unsplash.com/random/700*800"
-        elif value == 2:
-            src = "https://source.unsplash.com/random/600*800"
-        else: 
-            src = "https://source.unsplash.com/random/500*800"
-        return src 
+    if value == 0:
+        src = "https://source.unsplash.com/random/800*800"
+    elif value ==1:
+        src = "https://source.unsplash.com/random/700*800"
+    elif value == 2:
+        src = "https://source.unsplash.com/random/600*800"
+    else: 
+        src = "https://source.unsplash.com/random/500*800"
+    return src 
 
 
 """
