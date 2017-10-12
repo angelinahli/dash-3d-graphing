@@ -18,7 +18,28 @@ from dash.dependencies import Input, Output, State, Event
 import dash_core_components as dcc
 import dash_html_components as html
 
-from food_obs import xlist, ylist, zlist
+
+"""
+DATA:
+* x: student_id
+* y: date
+* z: waste percentage
+"""
+
+df = pd.read_csv("new_food_obs.csv")
+df["day"] = df["date"].apply(lambda string: int(string.split("/")[1]))
+del df["date"]
+
+df = df.pivot(
+    index="day", columns="SID", values="waste?")
+
+xlist = list(df.columns)
+ylist = list(df.index)
+zlist = df.values.tolist()
+
+"""
+FUNCTIONS:
+"""
 
 def get_figure(fig_title, xlist, ylist, zlist):
     trace1 = dict(
@@ -135,6 +156,7 @@ def get_app(fig_title, xlist, ylist, zlist):
     ])
 
     return app
+
 
 if __name__ == "__main__":
     app = get_app("Food waste per student over time", xlist, ylist, zlist)
