@@ -42,7 +42,8 @@ NUM_PANES = 4
 # contains a markdown string description for each pane.
 TEXTS = {
     i: """
-    ### Pane {i} title
+    \n\n
+    #### Pane {i} title
     Here is some sample text for pane number {i}. We can use this space to
     describe what this pane consists of.
     """.format(i=i + 1).replace("  ", "") for i in range(0, NUM_PANES)
@@ -65,7 +66,7 @@ app.layout = html.Div([
         [
             dcc.Markdown(
                 """
-                ### Dash Demonstrations: Different panes
+                ## Dash Demonstrations: Different panes
                 By Angelina Li and Anah Lewi
                 """.replace("  ", ""),
                 className="eight columns offset-by-two"
@@ -89,7 +90,7 @@ app.layout = html.Div([
                         min=0,
                         max=3,
                         value=3,
-                        marks={i: 'Pane {}'.format(i) for i in range(4)},
+                        marks={i: 'Pane {}'.format(i + 1) for i in range(4)},
                         id="slider"
                     )
                 ],
@@ -125,7 +126,7 @@ app.layout = html.Div([
                 ],
                 className="row",
                 style={"margin-bottom": "10px"}
-            ),
+            )
         ],
         id="page"
     ),
@@ -171,9 +172,12 @@ def move_slider(back_val, next_val, slider):
     """
 
     # if any of these elements have no value coming in, set them to 0
-    for el in [backwards, forwards, slider]:
-        if el is None:
-            el = 0
+    if back_val is None:
+        back_val = 0
+    if next_val is None:
+        next_val = 0
+    if slider is None:
+        slider = 0
 
     global last_back_val
     global last_next_val

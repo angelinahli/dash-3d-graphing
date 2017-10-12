@@ -48,7 +48,7 @@ app.layout = html.Div([
         [
             dcc.Markdown(
                 """
-                ### Dash Demonstrations: 3-D Graphing
+                ## Dash Demonstrations: 3-D Graphing
                 By Angelina Li and Anah Lewi
                 """.replace("  ", ""),
                 className="eight columns offset-by-two"
