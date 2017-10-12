@@ -77,8 +77,8 @@ PART 3: Create the different components of this app
 
 @app.callback(Output("graph", "figure"))
 def make_graph():
-    
-    trace1 = dict(
+
+    trace = dict(
         type="surface",
         x=xlist,
         y=ylist,
@@ -104,4 +104,90 @@ def make_graph():
         zmin=0.0,
         scene="scene",
     )
+    trace2 = dict(
+            type='scatter3d',
+            mode='lines',
+            x=x_secondary,
+            y=y_secondary,
+            z=z_secondary,
+            hoverinfo='x+y+z',
+            line=dict(color='#444444')
+    )
 
+    data = [trace, trace2]
+
+
+    layout = dict(
+        autosize=True,
+        font=dict(
+            size=12,
+            color="#CCCCCC",
+        ),
+        margin=dict(
+            t=5,
+            l=5,
+            b=5,
+            r=5,
+        ),
+        showlegend=False,
+        hovermode='closest',
+        scene=dict(
+            aspectmode="manual",
+            aspectratio=dict(x=2, y=5, z=1.5),
+            camera=dict(
+                up=dict(x=0, y=0, z=1),
+                center=dict(x=0, y=0, z=1),
+                eye=dict(x=0, y=0, z=1)
+            ),
+            # annotations=[dict(
+            #     showarrow=False,
+            #     y="2015-03-18",
+            #     x="1-month",
+            #     z=0.046,
+            #     text="Point 1",
+            #     xanchor="left",
+            #     xshift=10,
+            #     opacity=0.7
+            # ), dict(
+            #     y="2015-03-18",
+            #     x="3-month",
+            #     z=0.048,
+            #     text="Point 2",
+            #     textangle=0,
+            #     ax=0,
+            #     ay=-75,
+            #     font=dict(
+            #         color="black",
+            #         size=12
+            #     ),
+            #     arrowcolor="black",
+            #     arrowsize=3,
+            #     arrowwidth=1,
+            #     arrowhead=1
+            # )],
+            xaxis={
+                "showgrid": True,
+                "title": "",
+                "type": "category",
+                "zeroline": False,
+                "categoryorder": 'array',
+                "categoryarray": list(reversed(list(set(xlist))))
+            },
+            yaxis={
+                "showgrid": True,
+                "title": "",
+                "type": "date",
+                "zeroline": False,
+            },
+        )
+    )
+    figure = dict(data=data, layout=layout)
+    return figure
+
+
+"""
+PART 4: Run the Dash app
+"""
+
+if __name__ == "__main__":
+    app.server.run(debug=True)

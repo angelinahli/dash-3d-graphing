@@ -226,6 +226,7 @@ def update_slideImg(value):
             src = "https://source.unsplash.com/random/500*800"
         return src 
 
+
 """
 PART 5: Run the Dash app
 """
