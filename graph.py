@@ -70,13 +70,13 @@ app.layout = html.Div([
         id="page"
     ),
     dcc.Graph(
-        id="newGraph",
+        id="graph",
         figure={
-            "data":[
+            "data": [
                 {
-                    "x":xlist,
-                    "y":ylist,
-                    "z":zlist,
+                    "x": xlist,
+                    "y": ylist,
+                    "z": zlist,
                     "hoverinfo":"x+y+z",
                     "lighting":{
                         "ambient": 0.95,
@@ -90,12 +90,33 @@ app.layout = html.Div([
                         [0.25, "rgb(249, 162, 162)"],
                         [0.5, "rgb(242, 104, 104)"],
                         [0.75, "rgb(242, 77, 77)"],
-                        [1, "rgb(242, 43, 43)"]
+                        [1, "rgb(242, 43, 43)"],
                     ],
+                    "opacity": 0.7,
+                    "showscale": False,
+                    "zmax": 80.0,
+                    "zmin": 0.0,
+                    "scene": "scene",
                 }
+            ],
 
-            ]
-        }
+            "layout": {
+                "title": "3D Dash Graph",
+                "autosize": True,
+                "font": dict(
+                    size=12,
+                    color="#CCCCCC",
+                ),
+                "margin": dict(
+                    t=50,
+                    l=50,
+                    b=50,
+                    r=50,
+                ),
+                "showlegend": False,
+                "hovermode": 'closest',
+            },
+        },
     )
 ])
 
@@ -126,11 +147,7 @@ def make_graph():
             [0.75, "rgb(242, 77, 77)"],
             [1, "rgb(242, 43, 43)"]
         ],
-        # opacity=0.7,
-        # showscale=False,
-        # zmax=80.0,
-        # zmin=0.0,
-        # scene="scene",
+        
     )
     trace2 = dict(
             type='scatter3d',
