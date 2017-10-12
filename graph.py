@@ -15,6 +15,8 @@ from dash.dependencies import Input, Output, State, Event
 import dash_core_components as dcc
 import dash_html_components as html
 
+from food_obs import xlist, ylist, zlist
+
 """
 PART 1: Initialize the app and assign a CSS file.
 """
@@ -32,12 +34,7 @@ app.css.append_css({
 
 
 """
-PART 2: Import and manipulate the data we need to create an x-y-z plane graph
-"""
-
-
-"""
-PART 3: Define the layout of the Dash app
+PART 2: Define the layout of the Dash app
 This just tells elements in our app where they should appear
 """
 
@@ -75,7 +72,36 @@ app.layout = html.Div([
 ])
 
 """
-PART 4: Create the different components of this app
+PART 3: Create the different components of this app
 """
 
+@app.callback(Output("graph", "figure"))
+def make_graph():
+    
+    trace1 = dict(
+        type="surface",
+        x=xlist,
+        y=ylist,
+        z=zlist,
+        hoverinfo="x+y+z",
+        lighting={
+            "ambient": 0.95,
+            "diffuse": 0.95,
+            "fresnel": 0.05,
+            "roughness": 0.05,
+            "specular": 0.01
+        },
+        colorscale=[
+            [0, "rgb(255, 237, 237)"],
+            [0.25, "rgb(249, 162, 162)"],
+            [0.5, "rgb(242, 104, 104)"],
+            [0.75, "rgb(242, 77, 77)"],
+            [1, "rgb(242, 43, 43)"]
+        ],
+        opacity=0.7,
+        showscale=False,
+        zmax=80.0,
+        zmin=0.0,
+        scene="scene",
+    )
 
