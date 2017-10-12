@@ -5,7 +5,6 @@ AUTHORS: Anah Lewi and Angelina Li
 DATE: 10/11/17
 """
 
-
 import pandas as pd
 import numpy as np
 import plotly.plotly as py
@@ -48,6 +47,10 @@ TEXTS = {
     describe what this pane consists of.
     """.format(i=i + 1).replace("  ", "") for i in range(0, NUM_PANES)
 }
+
+# initialize these to 0 beforehand
+last_back_val = 0
+last_next_val = 0
 
 
 """
@@ -151,3 +154,44 @@ def make_text(value):
         value = 0
 
     return TEXTS[value]
+
+@app.callback(
+    Output("slider", "value"),
+    [
+        Input("backwards", "n_clicks"),
+        Input("forwards", "n_clicks"),
+    ],
+    [State("slider", "value")])
+def move_slider(back_val, next_val, slider):
+    """
+    Sets the value of each element.
+    Here, backwards id corresponds with back_val parameter;
+    forwards id corresponds with next_val parameter;
+    state of slider corresponds with slider parameter.
+    """
+
+    # if any of these elements have no value coming in, set them to 0
+    for el in [backwards, forwards, slider]:
+        if el is None:
+            el = 0
+
+    global last_back_val
+    global last_next_val
+
+    # return either minimum pane index or one index back.
+    if back_val > last_back_val:
+        last_back_val = back_val
+        return max(0, slider - 1)
+
+    # return either maximum pane index or one index forwards.
+    if next_val > last_next_val:
+        last_next_val = next_val
+        return min(NUM_PANES - 1, slider + 1)
+
+
+"""
+PART 5: Run the Dash app
+"""
+
+if __name__ == "__main__":
+    app.server.run(debug=True)

@@ -4,5 +4,4 @@ Inspired by Dash gallery [New York Times yield curve](https://plot.ly/dash/galle
 
 
 #### To Do:
-* Create sample charts to scroll through using the scroller
 * Create toy 3 dimensional data to graph
