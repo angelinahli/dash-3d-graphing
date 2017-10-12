@@ -1,4 +1,6 @@
+import numpy as np
 import pandas as pd
+from pandas import DataFrame
 
 """
 We're plotting:
@@ -7,18 +9,20 @@ We're plotting:
 * z: waste percentage
 """
 
-df = pd.read_csv("cleaned_food_obs.csv")
+df = pd.read_csv("new_food_obs.csv")
+df["day"] = df["date"].apply(lambda string: int(string.split("/")[1]))
+del df["date"]
 
-xlist = []
-ylist = []
-zlist = []
-for _, data in df.iterrows():
-    """
-    Only include data for which there are no missing values.
-    st20 data is formatted differently and is dropped for the sake of demonstration.
-    """
-    if (pd.notnull(data[1]) and pd.notnull(data[2]) and 
-        pd.notnull(data[13]) and data[1] != "st20"):
-        xlist.append(data[1])
-        ylist.append(data[2])
-        zlist.append(data[13])
+df = df.pivot(
+    index="day", columns="SID", values="waste?")
+
+xlist = list(df.columns)
+ylist = list(df.index)
+zlist = df.values.tolist()
+
+if __name__ == "__main__":
+    print xlist
+    print ylist
+    print zlist
+
+    print df
