@@ -1,3 +1,11 @@
+"""
+FILENAME: slider.py
+DESC: Demonstrate the functionality of the sliders used in the demo.
+AUTHORS: Anah Lewi and Angelina Li
+DATE: 10/11/17
+"""
+
+
 import pandas as pd
 import numpy as np
 import plotly.plotly as py
@@ -8,6 +16,10 @@ from dash.dependencies import Input, Output, State, Event
 import dash_core_components as dcc
 import dash_html_components as html
 
+
+"""
+PART 1: Initialize the app and assign a CSS file.
+"""
 
 # Initialize a Dash app
 app = dash.Dash()
@@ -21,8 +33,27 @@ app.css.append_css({
 })
 
 
-# app's layout specifies what should appear where.
-# creating a very simple layout to test things out.
+"""
+PART 2: Define some internal data we will rely on later.
+"""
+
+# specifies how many panes we want to appear.
+NUM_PANES = 4
+
+# contains a markdown string description for each pane.
+TEXTS = {
+    i: """
+    ### Pane {i} title
+    Here is some sample text for pane number {i}. We can use this space to
+    describe what this pane consists of.
+    """.format(i=i + 1).replace("  ", "") for i in range(0, NUM_PANES)
+}
+
+
+"""
+PART 3: Define the layout of the Dash app
+This just tells elements in our app where they should appear
+"""
 
 app.layout = html.Div([
     
@@ -31,7 +62,7 @@ app.layout = html.Div([
         [
             dcc.Markdown(
                 """
-                ### Testing out the NYTimes Yield Curve App
+                ### Dash Demonstrations: Different panes
                 By Angelina Li and Anah Lewi
                 """.replace("  ", ""),
                 className="eight columns offset-by-two"
@@ -45,10 +76,7 @@ app.layout = html.Div([
         }
     ),
 
-    # slider that comes with 3 components:
-    # (1) slider with no labels that allows user to access different panes
-    # (2) two buttons --> back and forwards, for better navigation between panes
-    # (3) text that is read in from 
+    # Slider with different labels associated with each pane.
     html.Div(
         [
             # simple slider with 4 panes to flick through.
@@ -58,7 +86,7 @@ app.layout = html.Div([
                         min=0,
                         max=3,
                         value=3,
-                        marks={i: '' for i in range(4)},
+                        marks={i: 'Pane {}'.format(i) for i in range(4)},
                         id="slider"
                     )
                 ],
@@ -95,14 +123,31 @@ app.layout = html.Div([
                 className="row",
                 style={"margin-bottom": "10px"}
             ),
-
-            # the actual graph we want comes next (where precisely this is
-            # positioned is, we assume, specified by our css file)
-            dcc.Graph(
-                id="graph",
-                style={"height": "65vh"}
-            ),
         ],
         id="page"
     ),
 ])
+
+
+"""
+PART 4: Create the different components of our app
+"""
+
+@app.callback(Output("text", "children"), [Input("slider", "value")])
+def make_text(value):
+    """
+    Returns text labels given each pane view we have.
+    callback will assign this text output to the dcc Markdown obj we created in
+    layout (i.e. this text will be used to create descriptions of each pane)
+    
+    Output text: the text the markdown obj we defined above takes on.
+
+    Input slider: the whole slider obj defined above
+    Input value: value the slider is resting on right now.
+    """
+
+    # if for some reason value is none, shift back to the first pane.
+    if value is None:
+        value = 0
+
+    return TEXTS[value]
