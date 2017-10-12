@@ -43,7 +43,7 @@ NUM_PANES = 4
 TEXTS = {
     i: """
     \n\n
-    #### Pane {i} title
+    #### New Image {i} 
     Here is some sample text for pane number {i}. We can use this space to
     describe what this pane consists of.
     """.format(i=i + 1).replace("  ", "") for i in range(0, NUM_PANES)
@@ -66,7 +66,7 @@ app.layout = html.Div([
         [
             dcc.Markdown(
                 """
-                ## Dash Demonstrations: Different panes
+                ## Dash Demonstrations: Different panes and Random Images 
                 By Angelina Li and Anah Lewi
                 """.replace("  ", ""),
                 className="eight columns offset-by-two"
@@ -90,7 +90,7 @@ app.layout = html.Div([
                         min=0,
                         max=3,
                         value=3,
-                        marks={i: 'Pane {}'.format(i + 1) for i in range(4)},
+                        marks={i: 'Random Image {}'.format(i + 1) for i in range(4)},
                         id="slider"
                     )
                 ],
@@ -123,6 +123,7 @@ app.layout = html.Div([
                         id="text",
                         className="six columns"
                     ),
+<<<<<<< Updated upstream
 
                     # just a random nice image
                     html.Div(
@@ -133,6 +134,17 @@ app.layout = html.Div([
                         ],
                         className="row"
                     )
+=======
+                    html.Img(
+                            id="newImg",
+                            src="https://source.unsplash.com/random",
+                            style={
+                                "margin-left":"6%"
+                            }
+                    ),
+
+
+>>>>>>> Stashed changes
                 ],
                 className="row",
                 style={"margin-bottom": "10px"}
@@ -202,6 +214,17 @@ def move_slider(back_val, next_val, slider):
         last_next_val = next_val
         return min(NUM_PANES - 1, slider + 1)
 
+@app.callback(Output('newImg', 'src'), [Input('slider', 'value')])
+def update_slideImg(value):
+        if value == 0:
+            src = "https://source.unsplash.com/random/800*800"
+        elif value ==1:
+            src = "https://source.unsplash.com/random/700*800"
+        elif value == 2:
+            src = "https://source.unsplash.com/random/600*800"
+        else: 
+            src = "https://source.unsplash.com/random/500*800"
+        return src 
 
 """
 PART 5: Run the Dash app
