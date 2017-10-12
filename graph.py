@@ -14,8 +14,8 @@ import dash
 from dash.dependencies import Input, Output, State, Event
 import dash_core_components as dcc
 import dash_html_components as html
-
-from food_obs import xlist, ylist, zlist
+import plotly.graph_objs as go 
+from food_obs import xlist, ylist, zlist, df
 
 """
 PART 1: Initialize the app and assign a CSS file.
@@ -71,31 +71,55 @@ app.layout = html.Div([
     ),
     dcc.Graph(
         id="newGraph",
-        figure={
-            "data":[
-                {
-                    "x":xlist,
-                    "y":ylist,
-                    "z":zlist,
-                    "hoverinfo":"x+y+z",
-                    "lighting":{
-                        "ambient": 0.95,
-                        "diffuse": 0.95,
-                        "fresnel": 0.05,
-                        "roughness": 0.05,
-                        "specular": 0.01
-                    },
-                    "colorscale":[
-                        [0, "rgb(255, 237, 237)"],
-                        [0.25, "rgb(249, 162, 162)"],
-                        [0.5, "rgb(242, 104, 104)"],
-                        [0.75, "rgb(242, 77, 77)"],
-                        [1, "rgb(242, 43, 43)"]
-                    ],
-                }
+        figure= go.Figure(
+            data=[
+                go.Surface(
+                x=xlist,
+                y=ylist,
+                z=zlist,
+                hoverinfo="x+y+z",
+                lighting={
+                    "ambient": 0.95,
+                    "diffuse": 0.95,
+                    "fresnel": 0.05,
+                    "roughness": 0.05,
+                    "specular": 0.01
+                },
+                colorscale=[
+                    [0, "rgb(255, 237, 237)"],
+                    [0.25, "rgb(249, 162, 162)"],
+                    [0.5, "rgb(242, 104, 104)"],
+                    [0.75, "rgb(242, 77, 77)"],
+                    [1, "rgb(242, 43, 43)"]
+                ],
+                ),
+            ],
+            
+            layout = go.Layout(
+                autosize=True,
+                font=dict(
+                    size=12,
+                    color="#CCCCCC",
+                ),
+                margin=dict(
+                    t=5,
+                    l=5,
+                    b=5,
+                    r=5,
+                ),
+                showlegend=False,
+                # hovermode='closest'
+                # scene=dict(
+                #     aspectmode="manual",
+                #     aspectratio=dict(x=2, y=5, z=1.5),
+                #     camera=dict(
+                #         up=dict(x=0, y=0, z=1),
+                #         center=dict(x=0, y=0, z=1),
+                #         eye=dict(x=0, y=0, z=1)
+                #     ),
+            )
 
-            ]
-        }
+        )
     )
 ])
 
