@@ -123,28 +123,16 @@ app.layout = html.Div([
                         id="text",
                         className="six columns"
                     ),
-<<<<<<< Updated upstream
 
                     # just a random nice image
-                    html.Div(
-                        [
-                            html.Img(
-                                src="https://source.unsplash.com/random/960x720"
-                            )
-                        ],
-                        className="row"
-                    )
-=======
                     html.Img(
                             id="newImg",
-                            src="https://source.unsplash.com/random",
                             style={
                                 "margin-left":"6%"
                             }
                     ),
 
 
->>>>>>> Stashed changes
                 ],
                 className="row",
                 style={"margin-bottom": "10px"}
@@ -230,6 +218,6 @@ def update_slideImg(value):
 """
 PART 5: Run the Dash app
 """
-
+import os
 if __name__ == "__main__":
-    app.server.run(debug=True)
+   app.run_server(host='0.0.0.0', port=os.getuid(), debug=True)
