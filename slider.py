@@ -125,14 +125,14 @@ app.layout = html.Div([
                     ),
 
                     # just a random nice image
-                    html.Img(
+                    html.Div(
+                        html.Img(
                             id="newImg",
-                            style={
-                                "margin-left":"6%"
+                        ),
+                        style={
+                                "text-align":"center"
                             }
                     ),
-
-
                 ],
                 className="row",
                 style={"margin-bottom": "10px"}
@@ -220,4 +220,4 @@ PART 5: Run the Dash app
 """
 import os
 if __name__ == "__main__":
-   app.run_server(host='0.0.0.0', port=os.getuid(), debug=True)
+   app.server.run(debug=True)
