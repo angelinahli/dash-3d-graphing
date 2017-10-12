@@ -69,6 +69,34 @@ app.layout = html.Div([
         ],
         id="page"
     ),
+    dcc.Graph(
+        id="newGraph",
+        figure={
+            "data":[
+                {
+                    "x":xlist,
+                    "y":ylist,
+                    "z":zlist,
+                    "hoverinfo":"x+y+z",
+                    "lighting":{
+                        "ambient": 0.95,
+                        "diffuse": 0.95,
+                        "fresnel": 0.05,
+                        "roughness": 0.05,
+                        "specular": 0.01
+                    },
+                    "colorscale":[
+                        [0, "rgb(255, 237, 237)"],
+                        [0.25, "rgb(249, 162, 162)"],
+                        [0.5, "rgb(242, 104, 104)"],
+                        [0.75, "rgb(242, 77, 77)"],
+                        [1, "rgb(242, 43, 43)"]
+                    ],
+                }
+
+            ]
+        }
+    )
 ])
 
 """
@@ -98,11 +126,11 @@ def make_graph():
             [0.75, "rgb(242, 77, 77)"],
             [1, "rgb(242, 43, 43)"]
         ],
-        opacity=0.7,
-        showscale=False,
-        zmax=80.0,
-        zmin=0.0,
-        scene="scene",
+        # opacity=0.7,
+        # showscale=False,
+        # zmax=80.0,
+        # zmin=0.0,
+        # scene="scene",
     )
     trace2 = dict(
             type='scatter3d',
@@ -169,7 +197,7 @@ def make_graph():
                 "showgrid": True,
                 "title": "",
                 "type": "category",
-                "zeroline": False,
+                "zeroline": True,
                 "categoryorder": 'array',
                 "categoryarray": list(reversed(list(set(xlist))))
             },
@@ -177,7 +205,7 @@ def make_graph():
                 "showgrid": True,
                 "title": "",
                 "type": "date",
-                "zeroline": False,
+                "zeroline": True,
             },
         )
     )
