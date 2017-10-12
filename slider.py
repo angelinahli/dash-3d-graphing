@@ -123,6 +123,16 @@ app.layout = html.Div([
                         id="text",
                         className="six columns"
                     ),
+
+                    # just a random nice image
+                    html.Div(
+                        [
+                            html.Img(
+                                src="https://source.unsplash.com/random/960x720"
+                            )
+                        ],
+                        className="row"
+                    )
                 ],
                 className="row",
                 style={"margin-bottom": "10px"}
